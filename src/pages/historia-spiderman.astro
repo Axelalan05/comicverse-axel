@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import StoryArt from '../components/StoryArt.astro';
+import '../styles/story-link.css';
+import '../styles/spider-story.css';
+
+const quote = 'Un gran poder conlleva una gran responsabilidad.';
+const powers = ['Fuerza sobrehumana', 'Reflejos increíbles', 'Agilidad absoluta'];
+---
+<Base title="La historia de Spider-Man | ComicVerse" immersive>
+  <header class="story-controls" slot="story-controls" transition:name="site-header" transition:animate="none">
+    <div class="reading-track" aria-hidden="true"><div class="reading-fill"></div></div>
+    <a class="story-back" href="/">← Volver a ComicVerse</a>
+  </header>
+  <div class="spider-story" id="inicio-historia">
+    <section class="story-scene origin" aria-labelledby="origen">
+      <div class="story-stage">
+        <StoryArt kind="web" />
+        <div class="spider-drop" aria-hidden="true">
+          <div class="spider-thread"></div>
+          <StoryArt kind="spider" />
+        </div>
+        <div class="scene-copy origin-copy">
+          <span class="story-kicker">El origen</span>
+          <h1 id="origen" tabindex="-1">Todo comenzó con una picadura...</h1>
+        </div>
+        <p class="story-scroll-hint">Desliza hacia abajo para vivir la historia <span aria-hidden="true">↓</span></p>
+      </div>
+    </section>
+
+    <section class="story-scene powers" aria-labelledby="poderes">
+      <div class="story-stage">
+        <div class="sense-rings" aria-hidden="true">
+          {Array.from({ length: 5 }, (_, index) => <i style={`--ring: ${index}`}></i>)}
+        </div>
+        <div class="scene-copy powers-copy">
+          <span class="story-kicker">Sentido arácnido</span>
+          <h2 id="poderes">El despertar de los poderes</h2>
+          <ul class="power-panels">
+            {powers.map((power, index) => <li style={`--panel: ${index}`}>{power}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-scene responsibility" aria-labelledby="responsabilidad">
+      <div class="story-stage">
+        <StoryArt kind="city-far" />
+        <StoryArt kind="city-near" />
+        <div class="scene-copy quote-copy">
+          <h2 id="responsabilidad" class="story-kicker">La gran responsabilidad</h2>
+          <blockquote aria-label={quote}>
+            <span aria-hidden="true">{quote.split(' ').map((word, index) => <span class="quote-word" style={`--word: ${index}`}>{word}{' '}</span>)}</span>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-scene swing" aria-labelledby="balanceo">
+      <div class="story-stage">
+        <div class="swing-sky" aria-hidden="true"></div>
+        <StoryArt kind="city-far" />
+        <StoryArt kind="city-near" />
+        <div class="swing-hero" aria-hidden="true">
+          <div class="swing-thread"></div>
+          <StoryArt kind="swing" />
+        </div>
+        <div class="scene-copy swing-copy"><h2 class="story-kicker" id="balanceo">El balanceo en Nueva York</h2></div>
+        <span class="comic-burst thwip" aria-hidden="true">¡THWIP!</span>
+        <span class="comic-burst whoosh" aria-hidden="true">¡WHOOSH!</span>
+      </div>
+    </section>
+
+    <section class="story-scene finale" aria-labelledby="continua">
+      <div class="story-stage">
+        <div class="finale-grid">
+          <div class="story-cover"><StoryArt kind="cover" /></div>
+          <div class="scene-copy finale-copy">
+            <h2 id="continua">Su historia continúa en tus manos.</h2>
+            <a class="btn story-link" href="/tienda?categoria=Spider-Man">Explorar cómics de Spider-Man en la tienda</a>
+            <a class="story-replay" href="#inicio-historia" data-story-replay>↺ Volver a ver la historia</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+

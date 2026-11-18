@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import ComicCard from '../components/ComicCard.astro';
+import {comics} from '../data/comics.js';
+---
+<Base title="Tienda | ComicVerse"><section class="page-heading"><div class="container"><span class="eyebrow">EXPLORÁ EL UNIVERSO MARVEL</span><h1>Catálogo de cómics</h1><p>Encontrá historias de Spider-Man, Avengers y X-Men.</p></div></section><section class="section container"><div class="shop-controls"><label class="search-box">⌕ <input id="search" type="search" placeholder="Buscar cómics por nombre..." aria-label="Buscar cómics"/></label><div class="filters" role="group" aria-label="Filtrar por categoría"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Spider-Man">Spider-Man</button><button class="filter" data-filter="Avengers">Avengers</button><button class="filter" data-filter="X-Men">X-Men</button></div></div><p id="results" class="results">9 cómics disponibles</p><div class="comic-grid" id="catalog">{comics.map(comic=><ComicCard comic={comic}/>)}</div><p id="empty" class="empty" hidden>No encontramos cómics con esa búsqueda.</p></section>
+</Base>

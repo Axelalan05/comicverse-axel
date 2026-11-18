@@ -1,0 +1,4 @@
+---
+const {comic}=Astro.props;
+---
+<article class="comic-card" data-title={comic.title.toLowerCase()} data-category={comic.category}><div class="comic-cover"><img src={comic.image} alt={`Portada de ${comic.title}`} loading="lazy"/><span class="category-tag">{comic.category}</span></div><div class="comic-info"><h3>{comic.title}</h3><p>Edición de colección</p><button class="add-cart" data-id={comic.id} data-title={comic.title}>+ Agregar al carrito</button></div></article>

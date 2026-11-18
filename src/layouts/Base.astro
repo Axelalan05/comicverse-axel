@@ -1,0 +1,95 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import CartIcon from '../components/CartIcon.astro';
+import '../styles/global.css';
+
+const { title = 'ComicVerse | El universo de los cómics', immersive = false } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/', label: 'Inicio' },
+  { href: '/tienda', label: 'Tienda' },
+  { href: '/login', label: 'Ingresar' },
+  { href: '/registro', label: 'Registrarse', class: 'nav-signup' },
+];
+
+const pageTurn = {
+  forwards: {
+    old: { name: 'page-exit-left', duration: '180ms', easing: 'ease-in', fillMode: 'both' },
+    new: { name: 'page-enter-right', duration: '340ms', easing: 'cubic-bezier(.22, 1, .36, 1)', fillMode: 'both' },
+  },
+  backwards: {
+    old: { name: 'page-exit-right', duration: '180ms', easing: 'ease-in', fillMode: 'both' },
+    new: { name: 'page-enter-left', duration: '340ms', easing: 'cubic-bezier(.22, 1, .36, 1)', fillMode: 'both' },
+  },
+};
+---
+<!doctype html>
+<html lang="es" transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#BD1C1C" />
+    <meta name="description" content="ComicVerse: explorá nuestro catálogo de cómics Marvel." />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body class:list={{ immersive }}>
+    {immersive ? <slot name="story-controls" /> : (
+      <header class="site-header" transition:name="site-header" transition:animate="none">
+        <div class="container nav">
+          <a class="brand" href="/">
+            <img src="/img/superhero.png" alt="" />
+            <span>COMIC<span class="accent">VERSE</span></span>
+          </a>
+          <nav aria-label="Navegación principal">
+            {links.map(({ href, label, class: className }) => (
+              <a href={href} class={className} aria-current={currentPath === href ? 'page' : undefined}>{label}</a>
+            ))}
+          </nav>
+          <a href="/carrito" class="cart-link" aria-label="Ver carrito" aria-current={currentPath === '/carrito' ? 'page' : undefined}>
+            <CartIcon />
+            <span id="cart-count" aria-hidden="true">0</span>
+          </a>
+        </div>
+      </header>
+    )}
+    <div class="page-content" transition:name="page-content" transition:animate={pageTurn}>
+      <main><slot /></main>
+      {!immersive && (
+        <footer class="footer">
+          <div class="container footer-inner">
+            <div>
+              <strong>COMIC<span class="accent">VERSE</span></strong>
+              <p>Historias que merecen estar en tu colección.</p>
+            </div>
+            <span>© {new Date().getFullYear()} ComicVerse · Proyecto demostrativo</span>
+          </div>
+        </footer>
+      )}
+    </div>
+    <script>
+      import { handleCartClick, syncCartOnStorage, updateCart } from '../scripts/cart';
+      import { mountSpiderStory } from '../scripts/spider-story';
+      import { mountShopFilters } from '../scripts/shop-filters';
+
+      document.addEventListener('astro:after-swap', () => {
+        document.body.dataset.navigated = '';
+        updateCart();
+        mountSpiderStory();
+        mountShopFilters();
+      });
+      updateCart();
+      mountSpiderStory();
+      mountShopFilters();
+      document.addEventListener('astro:page-load', () => {
+        document.querySelector('#demo-form')?.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const notice = document.querySelector<HTMLElement>('#form-notice');
+          if (notice) notice.hidden = false;
+        });
+      });
+      document.addEventListener('click', handleCartClick);
+      window.addEventListener('storage', syncCartOnStorage);
+    </script>
+  </body>
+</html>

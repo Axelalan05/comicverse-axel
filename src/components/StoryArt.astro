@@ -1,0 +1,74 @@
+---
+const { kind } = Astro.props;
+---
+{/* Podés reemplazar el dibujo de cada variante con tu propio SVG o imagen local. Conservá la clase de la escena en el elemento exterior para mantener el movimiento. */}
+{kind === 'web' && (
+  <svg class="origin-web" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="2">
+      <path d="M300 0v600M0 300h600M88 88l424 424M88 512 512 88" />
+      {[62, 113, 172, 231, 291].map(radius => (
+        <path d={Array.from({ length: 8 }, (_, i) => {
+          const angle = i * Math.PI / 4;
+          const nextAngle = (i + 1) * Math.PI / 4;
+          const x = 300 + radius * Math.cos(angle);
+          const y = 300 + radius * Math.sin(angle);
+          const nextX = 300 + radius * Math.cos(nextAngle);
+          const nextY = 300 + radius * Math.sin(nextAngle);
+          const middleAngle = (angle + nextAngle) / 2;
+          const controlX = 300 + radius * .73 * Math.cos(middleAngle);
+          const controlY = 300 + radius * .73 * Math.sin(middleAngle);
+          return `${i === 0 ? `M${x} ${y}` : ''} Q${controlX} ${controlY} ${nextX} ${nextY}`;
+        }).join(' ') + ' Z'} />
+      ))}
+    </g>
+  </svg>
+)}
+{kind === 'spider' && (
+  <svg class="spider-art" viewBox="0 0 180 164" fill="none" aria-hidden="true">
+    <g stroke="#fb4444" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m79 82-24-20-9-32-13-16m43 76L42 78 21 52 8 47m68 50-36 3-22 19-13 3m74-17-25 15-6 22-16 12" />
+      <path d="m101 82 24-20 9-32 13-16m-43 76 34-12 21-26 13-5m-68 50 36 3 22 19 13 3m-74-17 25 15 6 22 16 12" />
+    </g>
+    <ellipse cx="90" cy="63" rx="25" ry="31" fill="#111827" stroke="#ff6868" stroke-width="3" />
+    <ellipse cx="90" cy="99" rx="17" ry="21" fill="#0d1117" stroke="#fb4444" stroke-width="3" />
+    <path d="m90 46-9 17 9 14 9-14Z" fill="#dc2626" />
+    <circle cx="84" cy="105" r="2" fill="#fff" /><circle cx="96" cy="105" r="2" fill="#fff" />
+  </svg>
+)}
+{(kind === 'city-far' || kind === 'city-near') && (
+  <svg class:list={['city-layer', kind]} viewBox="0 0 1200 440" preserveAspectRatio="none" aria-hidden="true">
+    {kind === 'city-far' ? (
+      <>
+        <path fill="currentColor" d="M0 440V253h80v-83h69v-48h28v48h50v61h59V144h46v35h34v72h50V115h42V91h12V53h8v38h19v24h35v103h64V155h64v-31h25v31h31v107h59V185h79v-40h47v40h32v67h44V164h39v-26h74v83h110v219Z" />
+        <path fill="#99b2d4" opacity=".3" d="M96 193h12v32H96zm24 0h12v32h-12zm318-52h12v38h-12zm26 0h12v38h-12zm26 0h12v38h-12zm189 43h12v33h-12zm25 0h12v33h-12zm262 25h13v32h-13zm26 0h13v32h-13z" />
+      </>
+    ) : (
+      <>
+        <path fill="currentColor" d="M0 440V157h35V96h62v61h42v81h65v-73h71v-31h24v31h39v121h62v-52h80v-81h59V89h29V22h8v67h23v64h44v126h79V181h63v46h39v-92h56v-29h90v29h33v112h44v-53h46v-77h67V75h65v42h33v323Z" />
+        <path fill="#ea5656" opacity=".55" d="M39 183h14v34H39zm27 0h14v34H66zm27 0h14v34H93zm123 22h14v31h-14zm27 0h14v31h-14zm263-15h14v35h-14zm29 0h14v35h-14zm29 0h14v35h-14zm29 0h14v35h-14zm213 34h14v32h-14zm60-53h14v32h-14zm28 0h14v32h-14zm28 0h14v32h-14zm218-15h14v35h-14zm28 0h14v35h-14z" />
+      </>
+    )}
+  </svg>
+)}
+{kind === 'swing' && (
+  <img class="swing-figure" src="/img/11-2-spider-man-png-picture.png"
+    width="823" height="830" alt="" decoding="async" />
+)}
+{kind === 'cover' && (
+  <svg class="story-cover-art" viewBox="0 0 320 400" aria-hidden="true">
+    <path fill="#131d31" d="M0 0h320v400H0Z" />
+    <path fill="#dc2626" d="M0 210 320 46v105L0 310Z" />
+    <path fill="#8f1a24" d="M0 289 320 128v26L0 325Z" />
+    <g fill="none" stroke="#eef2ff" opacity=".35">
+      <path d="M20 0l300 318M0 124l320 194M0 260l320 58M140 0l180 318M273 0l47 318M0 400l320-82" />
+      <path d="M44 26q16 56-38 102m99-36q-1 61-32 76 0 63-30 100m119-114q-10 51-40 44-7 59-40 77 31 39 23 98m114-158q-27 61-53 52 3 39-39 69m89-121q55-75 48-100m-20 150q43-29 49-64" />
+    </g>
+    <path d="M52 221C43 144 83 87 160 87s117 57 108 134c-7 71-52 117-108 136-56-19-101-65-108-136Z" fill="#dc2626" stroke="#0d1117" stroke-width="8" />
+    <g fill="none" stroke="#641824" stroke-width="2">
+      <path d="M160 90v263m0-106L63 173m97 74 97-74m-97 74-96 20m96-20 96 20m-96-20-51 82m51-82 51 82" />
+      <path d="M122 102q16 30 38 26 23 4 38-26M84 136q43 37 76 28 32 9 76-28M63 177q50 27 97 18 46 9 97-18M62 222q48 21 98 9 50 12 98-9M68 269q48 21 92 11 45 10 92-11m-159 44q30 8 67 1 36 7 67-1" />
+    </g>
+    <path d="M74 169c4 51 22 81 70 85l2-17Zm172 0c-4 51-22 81-70 85l-2-17Z" fill="#fff" stroke="#0d1117" stroke-width="8" stroke-linejoin="round" />
+    <path fill="#0d1117" d="M0 350h35v-41h27v65h23v-20h21v46H0Zm320-30h-27v-22h-26v58h-24v-19h-25v63h102Z" />
+  </svg>
+)}

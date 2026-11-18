@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import CartIcon from '../components/CartIcon.astro';
+---
+<Base title="Tu carrito | ComicVerse">
+  <section class="page-heading">
+    <div class="container">
+      <a class="cart-back" href="/tienda">← Volver a la tienda</a>
+      <h1>Tu carrito</h1>
+      <p>Revisá los cómics que elegiste.</p>
+    </div>
+  </section>
+  <section class="section container cart-section" aria-label="Contenido del carrito">
+    <div class="cart-empty" id="cart-empty" hidden>
+      <div class="cart-empty-icon"><CartIcon /></div>
+      <h2>Tu carrito está vacío</h2>
+      <a class="btn primary" href="/tienda">Explorar cómics →</a>
+    </div>
+    <div class="cart-panel" id="cart-panel" hidden>
+      <div class="cart-panel-heading">
+        <h2 id="cart-total" role="status"></h2>
+        <button type="button" class="btn ghost-dark" id="clear-cart">Vaciar carrito</button>
+      </div>
+      <ul id="cart-items" class="cart-items"></ul>
+      <p>Carrito demostrativo. Todavía no se realizan compras ni pagos.</p>
+    </div>
+    <template id="cart-item-template">
+      <li class="cart-item">
+        <img class="cart-cover" alt="" width="54" height="72" />
+        <div class="cart-item-info">
+          <strong class="cart-item-title"></strong>
+          <span class="cart-item-category"></span>
+        </div>
+        <button type="button" class="cart-remove" data-cart-remove>Quitar</button>
+      </li>
+    </template>
+  </section>
+</Base>
